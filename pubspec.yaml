@@ -1,0 +1,16 @@
+name: macro_util
+description: Helpers and utilities for developing macros.
+repository: https://github.com/alexeyinkin/dart-macro-util.git
+version: 0.1.0-1.dev
+
+environment:
+  sdk: ^3.5.0-152
+
+topics:
+  - macros
+
+dependencies:
+  macros: ">=0.1.0-main.5 <0.2.0-main"
+
+dev_dependencies:
+  total_lints: ^3.4.0
