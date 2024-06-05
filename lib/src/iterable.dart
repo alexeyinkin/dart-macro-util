@@ -1,5 +1,5 @@
 // ignore: public_member_api_docs
-extension MacroUtilListExtension on List<Object> {
+extension MacroUtilIterableExtension on Iterable<Object> {
   /// Indents code parts.
   ///
   /// ```dart
