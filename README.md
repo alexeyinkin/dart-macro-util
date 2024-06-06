@@ -14,7 +14,7 @@ Output:
 # Introspect all fields of a type
 
 ```dart
-final map = await FieldIntrospectionData.introspectType(clazz, builder);
+final map = await builder.introspectType(clazz);
 final type = map['fieldName']!.typeDeclaration;
 ```
 

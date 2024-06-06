@@ -1,3 +1,8 @@
+## 0.1.0-3.dev
+
+* Moved `introspectType` and `introspectField` to `MacroUtilDeclarationBuilderExtension`.
+* Added `FieldIntrospectionData.StaticType`.
+
 ## 0.1.0-2.dev
 
 * Added `DeclarationBuilder.nonObjectSuperclassDeclarationOf`.

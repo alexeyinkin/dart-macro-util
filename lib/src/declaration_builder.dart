@@ -1,5 +1,7 @@
 import 'package:macros/macros.dart';
 
+import 'field_introspection_data.dart';
+
 // ignore: public_member_api_docs
 extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
   /// Logs [obj] as a comment in the library's global code.
@@ -85,5 +87,92 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
         name: await resolveIdentifier(Uri.parse('dart:core'), 'Object'),
       ),
     );
+  }
+
+  /// Introspects [type] and returns [FieldIntrospectionData] for all its fields
+  /// mapped by their names.
+  Future<Map<String, FieldIntrospectionData>> introspectType(
+    TypeDeclaration type,
+  ) async {
+    final fields = await fieldsOf(type);
+    final futures = <String, Future<FieldIntrospectionData?>>{};
+
+    for (final field in fields) {
+      futures[field.identifier.name] = introspectField(field);
+    }
+
+    return (await _waitMap(futures)).whereNotNull();
+  }
+
+  /// Introspects the [field].
+  Future<FieldIntrospectionData?> introspectField(
+    FieldDeclaration field,
+  ) async {
+    final type = _checkNamedType(field.type);
+
+    if (type == null) {
+      report(
+        Diagnostic(
+          DiagnosticMessage(
+            'Only classes are supported as field types for serializable '
+            'classes',
+            target: field.asDiagnosticTarget,
+          ),
+          Severity.error,
+        ),
+      );
+      return null;
+    }
+
+    final (staticType, typeDecl) = await (
+      resolve(type.code),
+      unaliasedTypeDeclarationOf(type),
+    ).wait;
+
+    return FieldIntrospectionData(
+      fieldDeclaration: field,
+      name: field.identifier.name,
+      staticType: staticType,
+      unaliasedTypeDeclaration: typeDecl,
+    );
+  }
+
+  NamedTypeAnnotation? _checkNamedType(
+    TypeAnnotation type,
+  ) {
+    if (type is NamedTypeAnnotation) {
+      return type;
+    }
+
+    report(
+      Diagnostic(
+        DiagnosticMessage(
+          'Only fields with explicit named types are allowed here.',
+          target: type.asDiagnosticTarget,
+        ),
+        Severity.error,
+      ),
+    );
+
+    return null;
+  }
+}
+
+Future<Map<K, V>> _waitMap<K, V>(Map<K, Future<V>> futures) async {
+  final keys = futures.keys.toList(growable: false);
+  final values = await Future.wait(futures.values);
+  final n = futures.length;
+
+  return {
+    for (int i = 0; i < n; i++) keys[i]: values[i],
+  };
+}
+
+extension _NullableMapExtension<K, V> on Map<K, V?> {
+  Map<K, V> whereNotNull() {
+    return {
+      for (final entry in entries)
+        if (entry.value is V) entry.key: entry.value as V,
+    };
   }
 }
