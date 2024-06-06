@@ -1,3 +1,8 @@
+## 0.1.0-4.dev
+
+* Added `FieldIntrospectionData.nonNullableStaticType`.
+* Improved diagnostic messages.
+
 ## 0.1.0-3.dev
 
 * Moved `introspectType` and `introspectField` to `MacroUtilDeclarationBuilderExtension`.

@@ -8,6 +8,9 @@ class FieldIntrospectionData {
   /// The field's name.
   final String name;
 
+  /// The resolved non-nullable type.
+  final StaticType nonNullableStaticType;
+
   /// The resolved type.
   final StaticType staticType;
 
@@ -18,6 +21,7 @@ class FieldIntrospectionData {
   FieldIntrospectionData({
     required this.fieldDeclaration,
     required this.name,
+    required this.nonNullableStaticType,
     required this.staticType,
     required this.unaliasedTypeDeclaration,
   });

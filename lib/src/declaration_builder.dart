@@ -108,19 +108,9 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
   Future<FieldIntrospectionData?> introspectField(
     FieldDeclaration field,
   ) async {
-    final type = _checkNamedType(field.type);
+    final type = _checkNamedType(field);
 
     if (type == null) {
-      report(
-        Diagnostic(
-          DiagnosticMessage(
-            'Only classes are supported as field types for serializable '
-            'classes',
-            target: field.asDiagnosticTarget,
-          ),
-          Severity.error,
-        ),
-      );
       return null;
     }
 
@@ -129,17 +119,23 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
       unaliasedTypeDeclarationOf(type),
     ).wait;
 
+    final nonNullableStaticType =
+        type.isNullable ? await resolve(type.code.asNonNullable) : staticType;
+
     return FieldIntrospectionData(
       fieldDeclaration: field,
       name: field.identifier.name,
+      nonNullableStaticType: nonNullableStaticType,
       staticType: staticType,
       unaliasedTypeDeclaration: typeDecl,
     );
   }
 
   NamedTypeAnnotation? _checkNamedType(
-    TypeAnnotation type,
+    FieldDeclaration field,
   ) {
+    final type = field.type;
+
     if (type is NamedTypeAnnotation) {
       return type;
     }
@@ -147,8 +143,9 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
     report(
       Diagnostic(
         DiagnosticMessage(
-          'Only fields with explicit named types are allowed here.',
-          target: type.asDiagnosticTarget,
+          'Only fields with explicit named types are allowed here, '
+          '$type given.',
+          target: field.asDiagnosticTarget,
         ),
         Severity.error,
       ),
