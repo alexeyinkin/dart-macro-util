@@ -140,7 +140,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
         target: field.asDiagnosticTarget,
       );
 
-      return FailedFieldIntrospectionData(
+      return FieldIntrospectionData(
         fieldDeclaration: field,
         name: field.identifier.name,
       );

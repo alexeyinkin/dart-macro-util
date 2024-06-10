@@ -1,7 +1,7 @@
 import 'package:macros/macros.dart';
 
 /// The result of an introspection on [fieldDeclaration].
-sealed class FieldIntrospectionData {
+class FieldIntrospectionData {
   /// The declaration of the field.
   final FieldDeclaration fieldDeclaration;
 
@@ -33,14 +33,5 @@ class ResolvedFieldIntrospectionData extends FieldIntrospectionData {
     required this.nonNullableStaticType,
     required this.staticType,
     required this.unaliasedTypeDeclaration,
-  });
-}
-
-/// The result of a failed field introspection.
-class FailedFieldIntrospectionData extends FieldIntrospectionData {
-  // ignore: public_member_api_docs
-  FailedFieldIntrospectionData({
-    required super.fieldDeclaration,
-    required super.name,
   });
 }

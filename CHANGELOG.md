@@ -1,3 +1,7 @@
+## 0.1.0-7.dev
+
+* Deleted `FailedFieldIntrospectionData`.
+
 ## 0.1.0-6.dev
 
 * Added `ResolvedFieldIntrospectionData`, `FailedFieldIntrospectionData`.

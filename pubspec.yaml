@@ -1,7 +1,7 @@
 name: macro_util
 description: 'Helpers and utilities for developing macros: field introspection, generated code formatting, etc.'
 repository: https://github.com/alexeyinkin/dart-macro-util.git
-version: 0.1.0-6.dev
+version: 0.1.0-7.dev
 
 environment:
   sdk: ^3.5.0-152
