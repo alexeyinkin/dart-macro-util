@@ -124,7 +124,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
       final nonNullableStaticType =
           type.isNullable ? await resolve(type.code.asNonNullable) : staticType;
 
-      return FieldIntrospectionData(
+      return ResolvedFieldIntrospectionData(
         fieldDeclaration: field,
         name: field.identifier.name,
         nonNullableStaticType: nonNullableStaticType,
@@ -134,12 +134,16 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
       // ignore: avoid_catches_without_on_clauses
     } catch (ex) {
       reportError(
-        'Cannot resolve type: ${type.identifier.name}. '
+        'Cannot resolve type. '
         'If this is the only error you see for this field, please '
         'report it here: https://github.com/alexeyinkin/dart-macro-util',
         target: field.asDiagnosticTarget,
       );
-      return null;
+
+      return FailedFieldIntrospectionData(
+        fieldDeclaration: field,
+        name: field.identifier.name,
+      );
     }
   }
 

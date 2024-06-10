@@ -1,3 +1,7 @@
+## 0.1.0-6.dev
+
+* Added `ResolvedFieldIntrospectionData`, `FailedFieldIntrospectionData`.
+
 ## 0.1.0-5.dev
 
 * Added `Builder.reportError` extension method.

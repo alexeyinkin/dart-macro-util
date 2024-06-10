@@ -1,13 +1,22 @@
 import 'package:macros/macros.dart';
 
-/// All useful data that can be obtained for a [FieldDeclaration].
-class FieldIntrospectionData {
+/// The result of an introspection on [fieldDeclaration].
+sealed class FieldIntrospectionData {
   /// The declaration of the field.
   final FieldDeclaration fieldDeclaration;
 
   /// The field's name.
   final String name;
 
+  // ignore: public_member_api_docs
+  FieldIntrospectionData({
+    required this.fieldDeclaration,
+    required this.name,
+  });
+}
+
+/// The result of a successful field introspection.
+class ResolvedFieldIntrospectionData extends FieldIntrospectionData {
   /// The resolved non-nullable type.
   final StaticType nonNullableStaticType;
 
@@ -18,11 +27,20 @@ class FieldIntrospectionData {
   final TypeDeclaration unaliasedTypeDeclaration;
 
   // ignore: public_member_api_docs
-  FieldIntrospectionData({
-    required this.fieldDeclaration,
-    required this.name,
+  ResolvedFieldIntrospectionData({
+    required super.fieldDeclaration,
+    required super.name,
     required this.nonNullableStaticType,
     required this.staticType,
     required this.unaliasedTypeDeclaration,
+  });
+}
+
+/// The result of a failed field introspection.
+class FailedFieldIntrospectionData extends FieldIntrospectionData {
+  // ignore: public_member_api_docs
+  FailedFieldIntrospectionData({
+    required super.fieldDeclaration,
+    required super.name,
   });
 }
