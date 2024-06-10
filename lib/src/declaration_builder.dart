@@ -1,5 +1,6 @@
 import 'package:macros/macros.dart';
 
+import 'builder.dart';
 import 'field_introspection_data.dart';
 
 // ignore: public_member_api_docs
@@ -91,7 +92,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
 
   /// Introspects [type] and returns [FieldIntrospectionData] for all its fields
   /// mapped by their names.
-  Future<Map<String, FieldIntrospectionData>> introspectType(
+  Future<Map<String, FieldIntrospectionData>> introspectFields(
     TypeDeclaration type,
   ) async {
     final fields = await fieldsOf(type);
@@ -114,21 +115,32 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
       return null;
     }
 
-    final (staticType, typeDecl) = await (
-      resolve(type.code),
-      unaliasedTypeDeclarationOf(type),
-    ).wait;
+    try {
+      final (staticType, typeDecl) = await (
+        resolve(type.code),
+        unaliasedTypeDeclarationOf(type),
+      ).wait;
 
-    final nonNullableStaticType =
-        type.isNullable ? await resolve(type.code.asNonNullable) : staticType;
+      final nonNullableStaticType =
+          type.isNullable ? await resolve(type.code.asNonNullable) : staticType;
 
-    return FieldIntrospectionData(
-      fieldDeclaration: field,
-      name: field.identifier.name,
-      nonNullableStaticType: nonNullableStaticType,
-      staticType: staticType,
-      unaliasedTypeDeclaration: typeDecl,
-    );
+      return FieldIntrospectionData(
+        fieldDeclaration: field,
+        name: field.identifier.name,
+        nonNullableStaticType: nonNullableStaticType,
+        staticType: staticType,
+        unaliasedTypeDeclaration: typeDecl,
+      );
+      // ignore: avoid_catches_without_on_clauses
+    } catch (ex) {
+      reportError(
+        'Cannot resolve type: ${type.identifier.name}. '
+        'If this is the only error you see for this field, please '
+        'report it here: https://github.com/alexeyinkin/dart-macro-util',
+        target: field.asDiagnosticTarget,
+      );
+      return null;
+    }
   }
 
   NamedTypeAnnotation? _checkNamedType(

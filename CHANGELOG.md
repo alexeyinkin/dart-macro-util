@@ -1,3 +1,9 @@
+## 0.1.0-5.dev
+
+* Added `Builder.reportError` extension method.
+* Catching exceptions in `introspectField`.
+* Renamed `introspectType` to `introspectFields`.
+
 ## 0.1.0-4.dev
 
 * Added `FieldIntrospectionData.nonNullableStaticType`.
