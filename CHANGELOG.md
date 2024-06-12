@@ -1,3 +1,7 @@
+## 0.1.0-8.dev
+
+* Return `FieldIntrospectionData` for `OmittedTypeAnnotation` instead of a diagnostic.
+
 ## 0.1.0-7.dev
 
 * Deleted `FailedFieldIntrospectionData`.

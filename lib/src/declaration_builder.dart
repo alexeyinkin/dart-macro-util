@@ -112,7 +112,10 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
     final type = _checkNamedType(field);
 
     if (type == null) {
-      return null;
+      return FieldIntrospectionData(
+        fieldDeclaration: field,
+        name: field.identifier.name,
+      );
     }
 
     try {
@@ -155,17 +158,6 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
     if (type is NamedTypeAnnotation) {
       return type;
     }
-
-    report(
-      Diagnostic(
-        DiagnosticMessage(
-          'Only fields with explicit named types are allowed here, '
-          '$type given.',
-          target: field.asDiagnosticTarget,
-        ),
-        Severity.error,
-      ),
-    );
 
     return null;
   }
