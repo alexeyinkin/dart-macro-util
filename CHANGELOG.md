@@ -1,3 +1,7 @@
+## 0.1.0-9.dev
+
+* Added `FieldIntrospectionData.constructorOptionality` and `FieldIntrospectionData.constructorHandling`.
+
 ## 0.1.0-8.dev
 
 * Return `FieldIntrospectionData` for `OmittedTypeAnnotation` instead of a diagnostic.
