@@ -1,3 +1,7 @@
+## 0.1.0-10.dev
+
+* Added `@ResolveIdentifiers()` macro.
+
 ## 0.1.0-9.dev
 
 * Added `FieldIntrospectionData.constructorOptionality` and `FieldIntrospectionData.constructorHandling`.
