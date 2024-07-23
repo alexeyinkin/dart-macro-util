@@ -1,3 +1,7 @@
+## 0.1.0-11.dev
+
+* Renamed `unaliasedTypeDeclarationOf` and `unaliasedTypeDeclaration` to `deAliased...`, added deprecated aliases.
+
 ## 0.1.0-10.dev
 
 * Added `@ResolveIdentifiers()` macro.

@@ -11,7 +11,13 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
   }
 
   /// Follows the declaration of [type] through any type aliases.
+  @Deprecated('Use deAliasedTypeDeclarationOf')
   Future<TypeDeclaration> unaliasedTypeDeclarationOf(
+    NamedTypeAnnotation type,
+  ) => deAliasedTypeDeclarationOf(type);
+
+  /// Follows the declaration of [type] through any type aliases.
+  Future<TypeDeclaration> deAliasedTypeDeclarationOf(
     NamedTypeAnnotation type,
   ) async {
     var typeDecl = await typeDeclarationOf(type.identifier);
@@ -62,7 +68,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
       return null;
     }
 
-    final result = await unaliasedTypeDeclarationOf(superclass);
+    final result = await deAliasedTypeDeclarationOf(superclass);
 
     if (result is! ClassDeclaration) {
       report(
@@ -121,7 +127,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
     try {
       final (staticType, typeDecl) = await (
         resolve(type.code),
-        unaliasedTypeDeclarationOf(type),
+        deAliasedTypeDeclarationOf(type),
       ).wait;
 
       final nonNullableStaticType =
@@ -132,7 +138,7 @@ extension MacroUtilDeclarationBuilderExtension on DeclarationBuilder {
         name: field.identifier.name,
         nonNullableStaticType: nonNullableStaticType,
         staticType: staticType,
-        unaliasedTypeDeclaration: typeDecl,
+        deAliasedTypeDeclaration: typeDecl,
       );
       // ignore: avoid_catches_without_on_clauses
     } catch (ex) {

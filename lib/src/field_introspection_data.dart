@@ -52,7 +52,7 @@ class ResolvedFieldIntrospectionData extends FieldIntrospectionData {
   final StaticType staticType;
 
   /// The type declaration of the field after following all typedef's.
-  final TypeDeclaration unaliasedTypeDeclaration;
+  final TypeDeclaration deAliasedTypeDeclaration;
 
   // ignore: public_member_api_docs
   ResolvedFieldIntrospectionData({
@@ -60,8 +60,12 @@ class ResolvedFieldIntrospectionData extends FieldIntrospectionData {
     required super.name,
     required this.nonNullableStaticType,
     required this.staticType,
-    required this.unaliasedTypeDeclaration,
+    required this.deAliasedTypeDeclaration,
   });
+
+  /// The type declaration of the field after following all typedef's.
+  @Deprecated('Use deAliasedTypeDeclaration')
+  TypeDeclaration get unaliasedTypeDeclaration => deAliasedTypeDeclaration;
 }
 
 /// Whether this field can or must be initialized.

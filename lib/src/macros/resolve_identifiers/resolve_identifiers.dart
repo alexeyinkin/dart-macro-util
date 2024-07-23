@@ -83,15 +83,41 @@ macro class ResolveIdentifiers implements ClassDeclarationsMacro {
     _IntrospectionData intr,
     FieldIntrospectionData fieldIntr,
   ) {
+    final libraryUrl = _getLibraryUrl(intr, fieldIntr);
+
     return [
       //
       'builder.resolveIdentifier(',
-      intr.ids.Uri, '.parse("',
-      librariesByIdentifiers[fieldIntr.name]!,
-      '"), ',
+      intr.ids.Uri, '.parse("', libraryUrl, '"), ',
       '"', fieldIntr.name, '"',
       '),\n',
     ];
+  }
+
+  String _getLibraryUrl(
+    _IntrospectionData intr,
+    FieldIntrospectionData fieldIntr,
+  ) {
+    return _getOverriddenLibraryUrl(intr, fieldIntr) ??
+        _getPredefinedLibraryUrl(fieldIntr) ??
+        (throw Exception(
+          'No library URL found for the identifier: ${fieldIntr.name}',
+        ));
+  }
+
+  String? _getOverriddenLibraryUrl(
+    _IntrospectionData intr,
+    FieldIntrospectionData fieldIntr,
+  ) {
+    fieldIntr.fieldDeclaration.hasInitializer;
+    // TODO(alexeyinkin): Get the library from:
+    //  - Annotations when a macro can see them: https://github.com/dart-lang/language/issues/3847
+    //  - A constant _fieldnameLibrary when a macro can see initializers, https://github.com/dart-lang/sdk/issues/56297
+    return null;
+  }
+
+  String? _getPredefinedLibraryUrl(FieldIntrospectionData fieldIntr) {
+    return librariesByIdentifiers[fieldIntr.name];
   }
 }
 
