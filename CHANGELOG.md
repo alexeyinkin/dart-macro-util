@@ -1,3 +1,9 @@
+## 0.1.0-12.dev
+
+* Recognize [`FieldPath`](https://pub.dev/documentation/cloud_firestore_platform_interface/latest/cloud_firestore_platform_interface/FieldPath-class.html) identifier of [`cloud_firestore_platform_interface`](https://pub.dev/packages/cloud_firestore_platform_interface).
+* Recognize `AbstractFilter` and `QuerySourceType` of [`model_fetch_firestore`](https://pub.dev/packages/model_fetch_firestore) package.
+* Require Dart 3.5 stable or above.
+
 ## 0.1.0-11.dev
 
 * Renamed `unaliasedTypeDeclarationOf` and `unaliasedTypeDeclaration` to `deAliased...`, added deprecated aliases.
