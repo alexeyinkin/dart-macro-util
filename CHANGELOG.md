@@ -1,3 +1,7 @@
+## 0.1.0-13.dev
+
+* Enabled `ResolveIdentifiers` to resolve `Future`, `Object`, `bool`, `int`.
+
 ## 0.1.0-12.dev
 
 * Recognize [`FieldPath`](https://pub.dev/documentation/cloud_firestore_platform_interface/latest/cloud_firestore_platform_interface/FieldPath-class.html) identifier of [`cloud_firestore_platform_interface`](https://pub.dev/packages/cloud_firestore_platform_interface).

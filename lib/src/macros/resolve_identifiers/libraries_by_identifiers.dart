@@ -1,3 +1,4 @@
+const _async = 'dart:async';
 const _core = 'dart:core';
 const _cloudFirestore = 'package:cloud_firestore/cloud_firestore.dart';
 const _cloudFirestorePlatformInterfaceFieldPath =
@@ -19,13 +20,17 @@ const librariesByIdentifiers = {
   'DocumentSnapshot': _cloudFirestore,
   'FieldPath': _cloudFirestorePlatformInterfaceFieldPath,
   'FirebaseFirestore': _cloudFirestore,
+  'Future': _async,
   'Map': _core,
+  'Object': _core,
   'Query': _cloudFirestore,
   'QueryBuilder': _modelFetchFirestoreQueryBuilder,
   'QuerySourceType': _modelFetchFirestoreQuerySourceType,
   'SnapshotOptions': _cloudFirestore,
   'String': _core,
   'UnimplementedError': _core,
+  'bool': _core,
   'dynamic': _core,
+  'int': _core,
   'override': _core,
 };
